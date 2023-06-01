@@ -1,63 +1,76 @@
 // Tenemos un li de productos
 
 const productos = [
-  {nombre: "Zapato negro", tipo: "zapato", color: "negro", img: "./taco-negro.jpg"},
-  {nombre: "Zapato azul", tipo: "zapato", color: "azul", img: "./taco-azul.jpg"},
-  {nombre: "Bota negra", tipo: "bota", color: "negro", img: "./bota-negra.jpg"},
-  {nombre: "Bota azul", tipo: "bota", color: "azul", img: "./bota-azul.jpg"},
-  {nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./zapato-rojo.jpg"}
+  { nombre: "Zapato negro", tipo: "zapato", color: "negro", img: "./taco-negro.jpg" },
+  { nombre: "Zapato azul", tipo: "zapato", color: "azul", img: "./taco-azul.jpg" },
+  { nombre: "Bota negra", tipo: "bota", color: "negro", img: "./bota-negra.jpg" },
+  { nombre: "Bota azul", tipo: "bota", color: "azul", img: "./bota-azul.jpg" },
+  { nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./zapato-rojo.jpg" }
 ]
 
-const li = document.getElementsByName("lista-de-productos")
-const $i = document.querySelector('.input');
+// Llamamos la referencia de input y div
+const input = document.querySelector('input');
+const li = document.getElementById("lista-de-productos");
 
-for (let i = 0; i < productos.length; i++) {
-  var d = document.createElement("div")
-  d.classList.add("producto")
+//Cambiamos todos los var por let
+function displayProductos(productosArray) {
+  li.innerHTML = "";
+  for (let i = 0; i < productosArray.length; i++) {
 
-  var ti = document.createElement("p")
-  ti.classList.add("titulo")
-  ti.textContent = productos[i].nombre
-  
-  var imagen = document.createElement("img");
-  imagen.setAttribute('src', productos[i].img);
+    let div = document.createElement("div")
+    div.classList.add("producto")
 
-  d.appendChild(ti)
-  d.appendChild(imagen)
+    let titulo = document.createElement("p")
+    titulo.classList.add("titulo")
+    titulo.textContent = productos[i].nombre;
 
-  li.appendChild(d)
+    let imagen = document.createElement("img");
+    imagen.setAttribute('src', productos[i].img);
+
+    div.appendChild(titulo)
+    div.appendChild(imagen)
+    li.appendChild(div)
+  }
 }
 
-displayProductos(productos)
-const botonDeFiltro = document.querySelector("button");
 
-botonDeFiltro.onclick = function() {
-  while (li.firstChild) {
-    li.removeChild(li.firstChild);
-  }
+  const botonDeFiltro = document.querySelector("button");
 
-  const texto = $i.value;
-  console.log(texto);
-  const productosFiltrados = filtrado(productos, texto );
-
-  for (let i = 0; i < productosFiltrados.length; i++) {
-    var d = document.createElement("div")
-    d.classList.add("producto")
-  
-    var ti = document.createElement("p")
-    ti.classList.add("titulo")
-    ti.textContent = productosFiltrados[i].nombre
+  botonDeFiltro.onclick = function () {
     
-    var imagen = document.createElement("img");
-    imagen.setAttribute('src', productosFiltrados[i].img);
+    li.innerHTML = "";
+    filterProducts();
   
-    d.appendChild(ti)
-    d.appendChild(imagen)
-  
-    li.appendChild(d)
   }
-}
+// Creamos metodo para filtrar productos 
+  function filterProducts(){
+    const texto = (input.value).toLowerCase();
 
-const filtrado = (productos = [], texto) => {
-  return productos.filter(item => item.tipo.includes(texto) || item.color.includes(texto));
-}  
+    const productosFiltrados = filtrado(productos, texto);
+    console.log(productosFiltrados);
+
+    for (let i = 0; i < productosFiltrados.length; i++) {
+      let div = document.createElement("div")
+      div.classList.add("producto")
+
+      let titulo = document.createElement("p")
+      titulo.classList.add("titulo")
+      titulo.textContent = productosFiltrados[i].nombre;
+
+      let imagen = document.createElement("img");
+      imagen.setAttribute('src', productosFiltrados[i].img);
+
+      div.appendChild(titulo);
+      div.appendChild(imagen);
+      li.appendChild(div);
+    }
+  }
+
+// Cambiamos funcion flecha a funcion declarada 
+  function filtrado (productos = [], texto){
+     
+     return productos.filter(item => item.tipo.includes(texto) || item.color.includes(texto));
+  }
+
+
+
