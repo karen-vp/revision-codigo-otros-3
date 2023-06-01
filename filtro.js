@@ -8,12 +8,14 @@ const productos = [
   { nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./zapato-rojo.jpg" }
 ]
 
+// Se cambiaron los nombres de las variables por unos mas descriptivos.
+
 // Llamamos la referencia de input y div
 const input = document.querySelector('input');
 const li = document.getElementById("lista-de-productos");
 
 //Cambiamos todos los var por let
-function displayProductos(productosArray) {
+function displayProducts(productosArray) {
   li.innerHTML = "";
   for (let i = 0; i < productosArray.length; i++) {
 
@@ -32,45 +34,46 @@ function displayProductos(productosArray) {
     li.appendChild(div)
   }
 }
+// Se le agrego un boton para mostrar el catalogo completo
+const btnCatalogo = document.getElementById('btn-catalogo');
+btnCatalogo.addEventListener('click', () => displayProducts(productos));
 
+const botonDeFiltro = document.querySelector("button");
 
-  const botonDeFiltro = document.querySelector("button");
+botonDeFiltro.onclick = function () {
 
-  botonDeFiltro.onclick = function () {
-    
-    li.innerHTML = "";
-    filterProducts();
-  
-  }
+  li.innerHTML = "";
+  filterProducts();
+
+}
 // Creamos metodo para filtrar productos 
-  function filterProducts(){
-    const texto = (input.value).toLowerCase();
+function filterProducts() {
+  const texto = (input.value).toLowerCase();
 
-    const productosFiltrados = filtrado(productos, texto);
-    console.log(productosFiltrados);
+  const productosFiltrados = filtrado(productos, texto);
+  console.log(productosFiltrados);
 
-    for (let i = 0; i < productosFiltrados.length; i++) {
-      let div = document.createElement("div")
-      div.classList.add("producto")
+  for (let i = 0; i < productosFiltrados.length; i++) {
+    let div = document.createElement("div")
+    div.classList.add("producto")
 
-      let titulo = document.createElement("p")
-      titulo.classList.add("titulo")
-      titulo.textContent = productosFiltrados[i].nombre;
+    let titulo = document.createElement("p")
+    titulo.classList.add("titulo")
+    titulo.textContent = productosFiltrados[i].nombre;
 
-      let imagen = document.createElement("img");
-      imagen.setAttribute('src', productosFiltrados[i].img);
+    let imagen = document.createElement("img");
+    imagen.setAttribute('src', productosFiltrados[i].img);
 
-      div.appendChild(titulo);
-      div.appendChild(imagen);
-      li.appendChild(div);
-    }
+    div.appendChild(titulo);
+    div.appendChild(imagen);
+    li.appendChild(div);
   }
+}
 
 // Cambiamos funcion flecha a funcion declarada 
-  function filtrado (productos = [], texto){
-     
-     return productos.filter(item => item.tipo.includes(texto) || item.color.includes(texto));
-  }
+function filtrado(productos = [], texto) {
+  return productos.filter(item => item.tipo.includes(texto) || item.color.includes(texto));
+}
 
 
 
